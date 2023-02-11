@@ -24,4 +24,8 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\frag.spv" />
+    <None Include="..\shaders\vert.spv" />
+  </ItemGroup>
 </Project>
