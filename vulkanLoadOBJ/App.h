@@ -66,6 +66,11 @@ private:
 		return VK_FALSE;
 	}
 
+	struct SwapChainSupportDetails {
+		VkSurfaceCapabilitiesKHR capabilities;
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+	};
 	const uint32_t WIDTH = 800;
 	const uint32_t HEIGHT = 600;
 
@@ -104,12 +109,6 @@ private:
 	/// 
 	/// </summary>
 	/// <returns> void </returns>
-	
-	struct SwapChainSupportDetails {
-		VkSurfaceCapabilitiesKHR capabilities;
-		std::vector<VkSurfaceFormatKHR> formats;
-		std::vector<VkPresentModeKHR> presentModes;
-	};
 
 	void createLogicalDevice() 
 	{
@@ -312,6 +311,7 @@ private:
 		if (glfwCreateWindowSurface(instance, window, nullptr, &surface) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create window surface!");
 		}
+		std::cout << "surface" << std::endl;
 	}
 
 	/// <summary>
