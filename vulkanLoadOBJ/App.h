@@ -96,7 +96,7 @@ private:
 	const std::vector<const char*> deviceExtensions = {
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
-
+	 
 #ifdef NDEBUG
 	const bool enableValidationLayers = false;
 #else
@@ -163,12 +163,9 @@ private:
 	/// <returns> void </returns>
 	void initWindow()
 	{
-
-
 		if (glfwInit() == GLFW_FALSE) {
 			throw std::runtime_error("glfw failed to init");
 		}
-		std::cout << "catch up bitch" << std::endl;
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -195,8 +192,8 @@ private:
 	}
 
 	void createGraphicsPipeline() {
-		auto vertShaderCode = readFile("shaders/vert.spv");
-		auto fragShaderCode = readFile("shaders/frag.spv");
+		auto vertShaderCode = readFile("../shaders/vert.spv");
+		auto fragShaderCode = readFile("../shaders/frag.spv");
 
 		VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
 		VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
@@ -343,21 +340,6 @@ private:
 		}
 	}
 
-	//int rateDeviceSuitability(VkPhysicalDevice device)
-	//{
-	//	int score = 0;
-
-	//	if (device.deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
-	//		score += 1000;
-	//	}
-
-	//	score += deviceProperties.limits.maxImageDimension2D;
-
-	//	if (!deviceFeatures.geometryShader) {
-	//		return 0;
-	//	}
-	//}
-
 	/// <summary>
 	/// 
 	/// Loop which manage every event and render.
@@ -426,8 +408,8 @@ private:
 		createInfo.pApplicationInfo = &appInfo;
 
 		auto extensions = getRequiredExtensions();
-		createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
-		createInfo.ppEnabledExtensionNames = deviceExtensions.data();
+		createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
+		createInfo.ppEnabledExtensionNames = extensions.data();
 
 		VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
 		if (enableValidationLayers) {
@@ -615,6 +597,10 @@ private:
 			}
 			VkBool32 presentSupport = false;
 			vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
+
+			if (presentSupport) {
+				indices.presentFamily = i;
+			}
 
 			if (indices.isComplete()) {
 				break;
